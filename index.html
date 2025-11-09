@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacto OK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        color-scheme: only dark;
+        --bg-color: #002744;
+        --bg-accent-1: rgba(0, 180, 216, 0.55);
+        --bg-accent-2: rgba(29, 53, 87, 0.6);
+        --card-bg: rgba(255, 255, 255, 0.09);
+        --card-border: rgba(255, 255, 255, 0.16);
+        --text-color: #f2f7ff;
+        --muted-color: rgba(242, 247, 255, 0.72);
+        --accent-color: #00b4d8;
+        --shadow-color: rgba(0, 0, 0, 0.25);
+        --transition: 180ms ease;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        padding: 40px 24px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at center,
+          var(--bg-accent-1),
+          transparent 65%
+        );
+        filter: blur(14px);
+        opacity: 0.55;
+        pointer-events: none;
+      }
+
+      body::before {
+        top: -220px;
+        right: -160px;
+      }
+
+      body::after {
+        bottom: -280px;
+        left: -180px;
+        background: radial-gradient(
+          circle at center,
+          rgba(0, 180, 216, 0.35),
+          transparent 70%
+        );
+      }
+
+      main {
+        width: min(420px, 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .brand-card {
+        width: 100%;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        backdrop-filter: blur(12px);
+        padding: 32px 24px;
+        box-shadow: 0 18px 36px var(--shadow-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .brand-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          155deg,
+          rgba(255, 255, 255, 0.18) 0%,
+          rgba(255, 255, 255, 0) 45%
+        );
+        mix-blend-mode: screen;
+        pointer-events: none;
+      }
+
+      .brand-card img {
+        width: clamp(140px, 40vw, 180px);
+        height: auto;
+        filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.35));
+      }
+
+      .brand-card h1 {
+        font-size: clamp(1.4rem, 4vw, 1.75rem);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      .brand-card .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 7px 16px;
+        border-radius: 999px;
+        background: rgba(0, 180, 216, 0.16);
+        border: 1px solid rgba(0, 180, 216, 0.32);
+        color: var(--text-color);
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .brand-card .badge i {
+        font-size: 0.9rem;
+      }
+
+      .brand-card p {
+        color: var(--muted-color);
+        font-size: clamp(0.95rem, 3.6vw, 1rem);
+        line-height: 1.45;
+        max-width: 32ch;
+      }
+
+      .cta-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .cta-list a {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 18px 20px;
+        border-radius: 18px;
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.07);
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: transform var(--transition), border-color var(--transition),
+          background var(--transition), box-shadow var(--transition);
+      }
+
+      .cta-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 180, 216, 0.3),
+          rgba(0, 180, 216, 0.08)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+        flex-shrink: 0; /* evita que el marco se deforme */
+      }
+
+      .cta-icon i {
+        font-size: 1.28rem;
+      }
+
+      .cta-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        text-align: left;
+      }
+
+      .cta-text .cta-title {
+        font-weight: 600;
+        font-size: 1.02rem;
+      }
+
+      .cta-text .cta-caption {
+        font-size: 0.84rem;
+        color: var(--muted-color);
+      }
+
+      .cta-arrow {
+        margin-left: auto;
+        color: rgba(242, 247, 255, 0.74);
+        font-size: 1.1rem;
+        transition: transform var(--transition), color var(--transition);
+      }
+
+      .cta-list a:hover,
+      .cta-list a:focus-visible {
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.28);
+        background: rgba(0, 131, 164, 0.28);
+        box-shadow: 0 16px 32px rgba(0, 17, 31, 0.42);
+        outline: none;
+      }
+
+      .cta-list a:hover .cta-arrow,
+      .cta-list a:focus-visible .cta-arrow {
+        transform: translateX(4px);
+        color: var(--text-color);
+      }
+
+      footer {
+        color: rgba(242, 247, 255, 0.55);
+        font-size: 0.85rem;
+        letter-spacing: 0.02em;
+      }
+
+      @media (min-width: 540px) {
+        body {
+          padding: 64px 40px;
+        }
+
+        .brand-card {
+          padding: 40px 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="brand-card">
+        <img src="assets/img/logo-OK.png" alt="Logo Contacto OK" />
+        <span class="badge">
+          <i class="fa-solid fa-sparkles" aria-hidden="true"></i>
+          Beta en evolución
+        </span>
+        <h1>Bienvenido visitante</h1>
+        <p>
+          Mantente al tanto de la evolución del proyecto. Accede a nuestra beta,
+          comparte tu opinión y acompáñanos en redes.
+        </p>
+      </section>
+      <nav class="cta-list" aria-label="Acciones principales">
+        <a href="#" class="cta-item">
+          <span class="cta-icon" aria-hidden="true">
+            <i class="fa-brands fa-android"></i>
+          </span>
+          <span class="cta-text">
+            <span class="cta-title">Prueba la versión beta en Android</span>
+            <span class="cta-caption">Descarga la build más reciente</span>
+          </span>
+          <i
+            class="fa-solid fa-arrow-right-long cta-arrow"
+            aria-hidden="true"
+          ></i>
+        </a>
+        <a href="https://www.instagram.com/okjuega/" class="cta-item">
+          <span class="cta-icon" aria-hidden="true">
+            <i class="fa-brands fa-instagram"></i>
+          </span>
+          <span class="cta-text">
+            <span class="cta-title">Síguenos en Instagram</span>
+            <span class="cta-caption"
+              >Mantente al contacto de historias, avances y lanzamientos</span
+            >
+          </span>
+          <i
+            class="fa-solid fa-arrow-right-long cta-arrow"
+            aria-hidden="true"
+          ></i>
+        </a>
+        <a href="#" class="cta-item">
+          <span class="cta-icon" aria-hidden="true">
+            <i class="fa-regular fa-circle-question"></i>
+          </span>
+          <span class="cta-text">
+            <span class="cta-title">Haznos saber qué opinas del proyecto</span>
+            <span class="cta-caption"
+              >Tu retroalimentación guía nuestro desarrollo</span
+            >
+          </span>
+          <i
+            class="fa-solid fa-arrow-right-long cta-arrow"
+            aria-hidden="true"
+          ></i>
+        </a>
+      </nav>
+      <footer>
+        © <span id="year"></span> "OK?". Todos los derechos reservados.
+      </footer>
+    </main>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
