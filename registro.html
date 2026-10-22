@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Registro del piloto de OK?</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <template id="crisis-tpl">
+      <aside class="crisis">
+        <p>
+          <i class="fa-solid fa-phone-volume" aria-hidden="true"></i>
+          <strong>¿Estás pasando por un momento difícil?</strong>
+          Si estás en crisis o piensas en hacerte daño, llama a la
+          <strong>Línea de la Vida: <a href="tel:8009112000">800 911 2000</a></strong>
+          (24 horas, gratuita). Este sitio y sus preguntas no sustituyen la
+          atención de un profesional.
+        </p>
+      </aside>
+    </template>
+
+    <main class="wrap">
+      <header class="brand compact">
+        <img class="logo-img compact" data-logo alt="OK? Juega con propósito" />
+      </header>
+
+      <section id="offline" class="screen">
+        <p class="hero-icon"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></p>
+        <h1>No pudimos conectar. Intenta de nuevo en unos minutos.</h1>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p2" class="screen">
+        <p class="hero-icon"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i></p>
+        <h1>Por ahora el piloto es solo para Android</h1>
+        <p class="lead">
+          Abre esta página desde tu teléfono Android para participar. Si usas
+          otro dispositivo, escríbenos y te avisamos cuando haya una versión
+          para ti.
+        </p>
+        <a class="btn btn-primary" href="mailto:okjuegaconproposito@gmail.com">
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          Escribirnos
+        </a>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p1b" class="screen">
+        <div class="callout">
+          <p id="p1b-text">
+            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+            El registro inicial ha concluido. Si ya participaste, ingresa tu código para el cuestionario final.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="/final">Ir al cuestionario final</a>
+        <a class="btn btn-secondary home-link" href="/">Volver al inicio</a>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p3" class="screen">
+        <div class="progress-wrap">
+          <p id="step-label" class="step">Paso 1 de 2</p>
+          <div class="progress" aria-hidden="true"><span id="step-bar" style="width: 50%"></span></div>
+        </div>
+        <h1>
+          <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
+          Cuéntanos un poco sobre ti
+        </h1>
+        <form id="profile-form">
+          <div class="field">
+            <label for="institucion">Institución educativa</label>
+            <select id="institucion" name="institucion" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>ITTOL</option>
+              <option>Otra</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="carrera">Carrera</label>
+            <select id="carrera" name="carrera" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="semestre">Semestre actual</label>
+            <select id="semestre" name="semestre" required>
+              <option value=""></option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="edad">Rango de edad</label>
+            <select id="edad" name="edad" required>
+              <option value=""></option>
+              <option>18-20</option>
+              <option>21-23</option>
+              <option>24-26</option>
+              <option>27 o más</option>
+              <option>Prefiero no decirlo</option>
+            </select>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="web">web</label>
+            <input id="web" name="web" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <p class="note">
+            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+            No escribas tu nombre ni datos que te identifiquen.
+          </p>
+          <button id="to-pss" class="btn btn-primary" type="submit">Continuar</button>
+        </form>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p4" class="screen">
+        <div class="progress-wrap">
+          <p class="step">Paso 2 de 2</p>
+          <div class="progress" aria-hidden="true"><span style="width: 100%"></span></div>
+        </div>
+        <h1>
+          <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+          Durante el último mes
+        </h1>
+        <p>Las siguientes preguntas se refieren al último mes.</p>
+        <form id="pre-form">
+          <div id="pss-pre"></div>
+          <div class="submit-bar">
+            <p id="pre-count" class="counter">0 de 10 respondidas</p>
+            <p id="pre-alert" class="alert" role="alert"></p>
+            <button id="pre-send" class="btn btn-primary" type="submit">Enviar y obtener mi código</button>
+          </div>
+        </form>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p5" class="screen">
+        <p class="hero-icon pop"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></p>
+        <h1>¡Listo, gracias!</h1>
+        <p>Este es tu código. Guárdalo: lo necesitarás para el cuestionario final.</p>
+        <p id="code-value" class="code"></p>
+        <div class="stack row-actions">
+          <button id="copy-code" class="btn btn-secondary" type="button" aria-live="polite">
+            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+            Copiar código
+          </button>
+          <button id="download-code" class="btn btn-secondary" type="button">
+            <i class="fa-solid fa-download" aria-hidden="true"></i>
+            Descargar código
+          </button>
+          <button id="share-code" class="btn btn-secondary" type="button" hidden>
+            <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+            Enviármelo
+          </button>
+        </div>
+        <div class="callout callout-orange">
+          <p>
+            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            Si pierdes este código, no podrás completar el cuestionario final, porque no guardamos tus datos personales. Toma una captura de pantalla.
+          </p>
+        </div>
+        <p class="note">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          También lo guardamos solo en este navegador para rellenarlo cuando regreses. Si cambias de navegador o borras sus datos, se perderá.
+        </p>
+        <h2 class="section-title">Siguientes pasos</h2>
+        <ol class="steps">
+          <li>Descarga e instala OK?</li>
+          <li>Úsala durante 2 a 4 semanas.</li>
+          <li>Regresa a este sitio, en la página del cuestionario final, y responde con tu código.</li>
+        </ol>
+        <p id="min-days" class="note" hidden>
+          <i class="fa-regular fa-clock" aria-hidden="true"></i>
+          El cuestionario final se habilita a los <strong id="min-days-n"></strong> de tu registro.
+        </p>
+        <a id="beta-link" class="btn btn-primary" href="https://drive.google.com/drive/folders/1geKfQ9mDmkeul65B0I8M7hpbMksZhye_?usp=drive_link" target="_blank" rel="noopener">
+          <i class="fa-brands fa-android" aria-hidden="true"></i>
+          Descargar OK? para Android
+        </a>
+        <p class="note">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          Al instalarla, Android puede pedirte permitir la instalación desde Drive o tu navegador. Es normal en versiones de prueba.
+        </p>
+        <p class="note">
+          La app tiene su propio aviso de privacidad.
+          <a id="aviso-app" href="https://okjuega.com.mx/aviso-de-privacidad" target="_blank" rel="noopener">Consultarlo</a>
+        </p>
+        <a class="btn btn-secondary" data-instagram href="https://www.instagram.com/okjuega/" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+          Síguenos en Instagram
+        </a>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p12" class="screen">
+        <p class="hero-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></p>
+        <h1 id="p12-text"></h1>
+        <a class="btn btn-secondary home-link" href="/">Volver al inicio</a>
+        <div data-crisis></div>
+      </section>
+
+      <footer class="foot">
+        <a href="aviso.html"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Aviso de privacidad</a>
+        <a href="mailto:okjuegaconproposito@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> okjuegaconproposito@gmail.com</a>
+        <a data-instagram href="https://www.instagram.com/okjuega/" target="_blank" rel="noopener"><i class="fa-brands fa-instagram" aria-hidden="true"></i> @okjuega</a>
+        <span>© 2026 OK?</span>
+      </footer>
+    </main>
+
+    <dialog id="m1" aria-labelledby="m1-title">
+      <div class="modal-bar">
+        <h2 id="m1-title">
+          <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+          Tu privacidad
+        </h2>
+        <button class="icon-btn" type="button" data-close="m1" aria-label="Cerrar">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div id="m1-body" class="modal-body">
+        <ul class="bullets">
+          <li>
+            <i class="fa-solid fa-user-secret" aria-hidden="true"></i>
+            <span><strong>No pedimos tu nombre.</strong> Te identificamos con un código aleatorio.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+            <span><strong>Recabamos datos sensibles:</strong> tus respuestas sobre estrés y bienestar emocional.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-chart-column" aria-hidden="true"></i>
+            <span><strong>Los resultados se reportan solo de forma agregada y anónima</strong> a COMECyT y a las instituciones participantes.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+            <span><strong>No vendemos ni transferimos tus datos.</strong></span>
+          </li>
+          <li>
+            <i class="fa-solid fa-user-pen" aria-hidden="true"></i>
+            <span><strong>Puedes ejercer tus derechos ARCO</strong> y retirar tu consentimiento cuando quieras.</span>
+          </li>
+        </ul>
+        <p><a href="aviso.html">Leer aviso de privacidad integral</a></p>
+      </div>
+      <div class="modal-actions">
+        <button id="read-notice" class="btn btn-primary" type="button" disabled>Leí el aviso</button>
+        <button id="cancel-notice" class="btn btn-secondary" type="button">Cancelar</button>
+      </div>
+    </dialog>
+
+    <dialog id="m2" aria-labelledby="m2-title">
+      <div class="modal-bar">
+        <h2 id="m2-title">
+          <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+          Consentimiento para participar
+        </h2>
+        <button class="icon-btn" type="button" data-close="m2" aria-label="Cerrar">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Propósito.</strong> Evaluar si OK?, una app de apoyo al estrés académico, es útil y fácil de usar, y observar cómo cambia el estrés percibido entre antes y después de usarla.</p>
+        <p><strong>Qué harás.</strong> Responderás un cuestionario inicial (unos 8 minutos), usarás la app durante 2 a 4 semanas y responderás un cuestionario final (unos 10 minutos).</p>
+        <p><strong>Posibles molestias.</strong> Algunas preguntas tratan sobre cómo te has sentido y pueden resultar incómodas. Puedes dejar de responder en cualquier momento cerrando la página. Estas preguntas no son un diagnóstico. Si necesitas apoyo, llama a la Línea de la Vida al 800 911 2000.</p>
+        <p><strong>Beneficios.</strong> No hay pago ni compensación. Tu participación ayuda a mejorar una herramienta para estudiantes.</p>
+        <p><strong>Confidencialidad.</strong> No te pedimos nombre. Tus respuestas se guardan con un código aleatorio y se reportan solo de forma agregada y anónima.</p>
+        <p><strong>Voluntariedad.</strong> Participar es voluntario. Puedes retirarte y solicitar la cancelación de tus datos escribiendo a okjuegaconproposito@gmail.com con tu código.</p>
+        <label class="check"><input id="c-age" type="checkbox" /> Tengo 18 años o más.</label>
+        <label class="check"><input id="c-notice" type="checkbox" /> Leí el aviso de privacidad y lo entiendo.</label>
+        <label class="check"><input id="c-join" type="checkbox" /> Acepto participar de forma voluntaria y que se traten mis datos, incluidos datos sensibles sobre mi bienestar emocional, para los fines del piloto.</label>
+      </div>
+      <div class="modal-actions">
+        <button id="accept" class="btn btn-primary" type="button" disabled>Acepto y continuar</button>
+        <button id="decline" class="btn btn-secondary" type="button">No acepto</button>
+      </div>
+    </dialog>
+
+    <script type="module" src="js/registro.js"></script>
+  </body>
+</html>

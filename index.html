@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Ayúdanos a probar OK?</title>
     <link
       rel="stylesheet"
@@ -11,6 +11,14 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <script>
+      (function () {
+        var p = new URLSearchParams(location.search);
+        if (p.get("fase") === "post") {
+          location.replace("/final" + (p.has("dev") ? "?dev=1" : ""));
+        }
+      })();
+    </script>
   </head>
   <body>
     <template id="crisis-tpl">
@@ -35,8 +43,7 @@
 
       <section id="p1" class="screen">
         <header class="brand">
-          <p class="logo">OK?</p>
-          <p class="tag">Juega con propósito</p>
+          <img class="logo-img" data-logo alt="OK? Juega con propósito" />
         </header>
         <h1>Ayúdanos a probar OK?</h1>
         <p class="lead">
@@ -77,7 +84,7 @@
           </div>
           <p id="ig-note" class="note" hidden>Si algo no carga, abre este enlace en Chrome.</p>
         </div>
-        <a id="go-post" class="linkish" href="/?fase=post">¿Ya terminaste el piloto? Responde el cuestionario final</a>
+        <a id="go-post" class="linkish" href="/final">¿Ya terminaste el piloto? Responde el cuestionario final</a>
         <p id="post-closed" class="disabled-link" hidden>El cuestionario final se habilitará al concluir las semanas de prueba.</p>
         <p id="reject" class="note" hidden>
           <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
@@ -87,8 +94,8 @@
         <footer class="foot">
           <a href="aviso.html"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Aviso de privacidad</a>
           <a href="mailto:okjuegaconproposito@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> okjuegaconproposito@gmail.com</a>
-          <a href="https://www.instagram.com/okjuega/"><i class="fa-brands fa-instagram" aria-hidden="true"></i> okjuega</a>
-          <span>© 2026 OKMental Technologies</span>
+          <a data-instagram href="https://www.instagram.com/okjuega/" target="_blank" rel="noopener"><i class="fa-brands fa-instagram" aria-hidden="true"></i> @okjuega</a>
+          <span>© 2026 OK?</span>
         </footer>
       </section>
 
@@ -106,277 +113,7 @@
         </a>
         <div data-crisis></div>
       </section>
-
-      <section id="p3" class="screen">
-        <h1>
-          <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
-          Cuéntanos un poco sobre ti
-        </h1>
-        <p class="step">Paso 1 de 2</p>
-        <div class="progress" aria-hidden="true"><span style="width: 50%"></span></div>
-        <form id="profile-form">
-          <div class="field">
-            <label for="institucion">Institución educativa</label>
-            <input id="institucion" name="institucion" type="text" maxlength="80" autocomplete="off" required />
-          </div>
-          <div class="field">
-            <label for="carrera">Carrera</label>
-            <input id="carrera" name="carrera" type="text" maxlength="80" autocomplete="off" required />
-          </div>
-          <div class="field">
-            <label for="semestre">Semestre actual</label>
-            <select id="semestre" name="semestre" required>
-              <option value=""></option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
-              <option>Otro</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="edad">Rango de edad</label>
-            <select id="edad" name="edad" required>
-              <option value=""></option>
-              <option>18-20</option>
-              <option>21-23</option>
-              <option>24-26</option>
-              <option>27 o más</option>
-              <option>Prefiero no decirlo</option>
-            </select>
-          </div>
-          <div class="hp" aria-hidden="true">
-            <label for="web">web</label>
-            <input id="web" name="web" type="text" tabindex="-1" autocomplete="off" />
-          </div>
-          <p class="note">
-            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-            No escribas tu nombre ni datos que te identifiquen.
-          </p>
-          <button id="to-pss" class="btn btn-primary" type="submit">Continuar</button>
-        </form>
-        <div data-crisis></div>
-      </section>
-
-      <section id="p4" class="screen">
-        <h1>
-          <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
-          Durante el último mes
-        </h1>
-        <p class="step">Paso 2 de 2</p>
-        <div class="progress" aria-hidden="true"><span style="width: 100%"></span></div>
-        <p>Las siguientes preguntas se refieren al último mes.</p>
-        <form id="pre-form">
-          <div id="pss-pre"></div>
-          <p id="pre-alert" class="alert" role="alert"></p>
-          <button id="pre-send" class="btn btn-primary" type="submit">
-            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true" hidden></i>
-            Enviar y obtener mi código
-          </button>
-        </form>
-        <div data-crisis></div>
-      </section>
-
-      <section id="p5" class="screen">
-        <p class="hero-icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></p>
-        <h1>¡Listo, gracias!</h1>
-        <p>Este es tu código. Guárdalo: lo necesitarás para el cuestionario final.</p>
-        <p id="code-value" class="code"></p>
-        <div class="stack">
-          <button id="copy-code" class="btn btn-secondary" type="button" aria-live="polite">
-            <i class="fa-regular fa-copy" aria-hidden="true"></i>
-            Copiar código
-          </button>
-          <button id="download-code" class="btn btn-secondary" type="button">
-            <i class="fa-solid fa-download" aria-hidden="true"></i>
-            Descargar código
-          </button>
-          <button id="share-code" class="btn btn-secondary" type="button" hidden>
-            <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
-            Enviármelo
-          </button>
-        </div>
-        <div class="callout callout-orange">
-          <p>
-            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-            Si pierdes este código, no podrás completar el cuestionario final, porque no guardamos tus datos personales. Toma una captura de pantalla.
-          </p>
-        </div>
-        <p class="note">
-          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-          También lo guardamos solo en este navegador para rellenarlo cuando regreses. Si cambias de navegador o borras sus datos, se perderá.
-        </p>
-        <h2 class="section-title">Siguientes pasos</h2>
-        <ol class="steps">
-          <li>Descarga e instala OK?</li>
-          <li>Úsala durante 2 a 4 semanas.</li>
-          <li>Regresa a piloto.okapp.mx/?fase=post y responde el cuestionario final con tu código.</li>
-        </ol>
-        <p id="min-days" class="note" hidden>
-          <i class="fa-regular fa-clock" aria-hidden="true"></i>
-          El cuestionario final se habilita a los <strong id="min-days-n"></strong> de tu registro.
-        </p>
-        <a id="beta-link" class="btn btn-primary" href="">
-          <i class="fa-brands fa-android" aria-hidden="true"></i>
-          Descargar OK? para Android
-        </a>
-        <div data-crisis></div>
-      </section>
-
-      <section id="post" class="screen">
-        <h1>
-          <i class="fa-solid fa-key" aria-hidden="true"></i>
-          Escribe tu código
-        </h1>
-        <form id="post-form">
-          <div class="field">
-            <label for="code-input">Escribe tu código</label>
-            <input id="code-input" name="code" type="text" maxlength="8" autocapitalize="characters" autocomplete="off" required />
-          </div>
-
-          <h2 class="section-title">
-            <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
-            Durante el último mes
-          </h2>
-          <p>Las siguientes preguntas se refieren al último mes.</p>
-          <div id="pss-post"></div>
-
-          <h2 class="section-title">
-            <i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>
-            Usabilidad
-          </h2>
-          <p>1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo</p>
-          <div id="sus-post"></div>
-
-          <h2 id="sat-title" class="section-title">
-            <i class="fa-regular fa-face-smile" aria-hidden="true"></i>
-            ¿Qué tan satisfecho/a estás con OK?
-          </h2>
-          <div id="sat-post"></div>
-
-          <h2 id="nps-title" class="section-title">
-            <i class="fa-regular fa-comment-dots" aria-hidden="true"></i>
-            ¿Qué tan probable es que recomiendes OK? a un compañero?
-          </h2>
-          <div id="nps-post"></div>
-
-          <div class="field">
-            <label for="util">¿Qué fue lo más útil?</label>
-            <textarea id="util" name="util" maxlength="600"></textarea>
-          </div>
-          <div class="field">
-            <label for="mejora">¿Qué mejorarías?</label>
-            <textarea id="mejora" name="mejora" maxlength="600"></textarea>
-          </div>
-          <p class="note">
-            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-            No escribas datos que te identifiquen.
-          </p>
-          <p id="post-alert" class="alert" role="alert"></p>
-          <button id="post-send" class="btn btn-primary" type="submit">
-            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true" hidden></i>
-            Enviar
-          </button>
-        </form>
-        <div data-crisis></div>
-      </section>
-
-      <section id="p10" class="screen">
-        <p class="hero-icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></p>
-        <h1>Gracias por participar. Tus respuestas nos ayudan a mejorar OK? para más estudiantes.</h1>
-        <div data-crisis></div>
-      </section>
-
-      <section id="p11" class="screen">
-        <p class="hero-icon"><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i></p>
-        <h1>Aún estás en tu periodo de prueba</h1>
-        <p id="p11-text" class="lead"></p>
-        <a class="btn btn-secondary home-link" href="/">Volver al inicio</a>
-        <div data-crisis></div>
-      </section>
-
-      <section id="p12" class="screen">
-        <p class="hero-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></p>
-        <h1 id="p12-text"></h1>
-        <a class="btn btn-secondary home-link" href="/">Volver al inicio</a>
-        <div data-crisis></div>
-      </section>
     </main>
-
-    <dialog id="m1" aria-labelledby="m1-title">
-      <div class="modal-bar">
-        <h2 id="m1-title">
-          <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
-          Tu privacidad
-        </h2>
-        <button class="icon-btn" type="button" data-close="m1" aria-label="Cerrar">
-          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div id="m1-body" class="modal-body">
-        <ul class="bullets">
-          <li>
-            <i class="fa-solid fa-user-secret" aria-hidden="true"></i>
-            <span><strong>No pedimos tu nombre.</strong> Te identificamos con un código aleatorio.</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
-            <span><strong>Recabamos datos sensibles:</strong> tus respuestas sobre estrés y bienestar emocional.</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-chart-column" aria-hidden="true"></i>
-            <span><strong>Los resultados se reportan solo de forma agregada y anónima</strong> a COMECyT y a las instituciones participantes.</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-lock" aria-hidden="true"></i>
-            <span><strong>No vendemos ni transferimos tus datos.</strong></span>
-          </li>
-          <li>
-            <i class="fa-solid fa-user-pen" aria-hidden="true"></i>
-            <span><strong>Puedes ejercer tus derechos ARCO</strong> y retirar tu consentimiento cuando quieras.</span>
-          </li>
-        </ul>
-        <p><a href="aviso.html">Leer aviso de privacidad integral</a></p>
-      </div>
-      <div class="modal-actions">
-        <button id="read-notice" class="btn btn-primary" type="button" disabled>Leí el aviso</button>
-        <button id="cancel-notice" class="btn btn-secondary" type="button">Cancelar</button>
-      </div>
-    </dialog>
-
-    <dialog id="m2" aria-labelledby="m2-title">
-      <div class="modal-bar">
-        <h2 id="m2-title">
-          <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
-          Consentimiento para participar
-        </h2>
-        <button class="icon-btn" type="button" data-close="m2" aria-label="Cerrar">
-          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Propósito.</strong> Evaluar si OK?, una app de apoyo al estrés académico, es útil y fácil de usar, y observar cómo cambia el estrés percibido entre antes y después de usarla.</p>
-        <p><strong>Qué harás.</strong> Responderás un cuestionario inicial (unos 8 minutos), usarás la app durante 2 a 4 semanas y responderás un cuestionario final (unos 10 minutos).</p>
-        <p><strong>Posibles molestias.</strong> Algunas preguntas tratan sobre cómo te has sentido y pueden resultar incómodas. Puedes dejar de responder en cualquier momento cerrando la página. Estas preguntas no son un diagnóstico. Si necesitas apoyo, llama a la Línea de la Vida al 800 911 2000.</p>
-        <p><strong>Beneficios.</strong> No hay pago ni compensación. Tu participación ayuda a mejorar una herramienta para estudiantes.</p>
-        <p><strong>Confidencialidad.</strong> No te pedimos nombre. Tus respuestas se guardan con un código aleatorio y se reportan solo de forma agregada y anónima.</p>
-        <p><strong>Voluntariedad.</strong> Participar es voluntario. Puedes retirarte y solicitar la cancelación de tus datos escribiendo a okjuegaconproposito@gmail.com con tu código.</p>
-        <label class="check"><input id="c-age" type="checkbox" /> Tengo 18 años o más.</label>
-        <label class="check"><input id="c-notice" type="checkbox" /> Leí el aviso de privacidad y lo entiendo.</label>
-        <label class="check"><input id="c-join" type="checkbox" /> Acepto participar de forma voluntaria y que se traten mis datos, incluidos datos sensibles sobre mi bienestar emocional, para los fines del piloto.</label>
-      </div>
-      <div class="modal-actions">
-        <button id="accept" class="btn btn-primary" type="button" disabled>Acepto y continuar</button>
-        <button id="decline" class="btn btn-secondary" type="button">No acepto</button>
-      </div>
-    </dialog>
-
-    <script src="js/app.js"></script>
+    <script type="module" src="js/inicio.js"></script>
   </body>
 </html>

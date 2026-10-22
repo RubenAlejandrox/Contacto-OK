@@ -12,7 +12,7 @@ Sitio estático y una función serverless para el registro y el cuestionario fin
 
 Un valor inválido de `PILOTO_FASE` se trata como `AMBAS`. Un valor inválido de `MIN_DIAS_POST` se trata como `14`. En Preview conviene `MIN_DIAS_POST=0`.
 
-`BETA_URL` no es una variable de entorno: se define en `js/app.js` antes de abrir el piloto.
+`BETA_URL` no es una variable de entorno: se define en `js/config.js` antes de abrir el piloto.
 
 ## Cambiar la fase
 
@@ -26,9 +26,9 @@ Vercel → Settings → Environment Variables → editar `PILOTO_FASE` → **Red
 
 ## Base de datos
 
-Ejecutar `schema.sql` en Neon. Antes de abrir el piloto, vaciar las pruebas con `DELETE FROM respuestas;`.
+Ejecutar `schema.sql` en Neon. El script borra la tabla de prueba `respuestas` y crea `participantes`, `pss`, `evaluacion_app` y la vista `v_resultados`.
 
-La consulta comentada al final de `schema.sql` exporta por institución sin la columna `code`. No incluir `code` en los CSV que se entreguen.
+La vista exporta por institución sin la columna `code`. No incluir `code` en los CSV que se entreguen. Para borrar a un participante: `DELETE FROM participantes WHERE code = 'XXXXXX';`.
 
 ## Probar la API
 
@@ -37,9 +37,11 @@ Sustituir `BASE` por el origen local o de Preview. Hace falta `DATABASE_URL`. Co
 ```bash
 curl -sS BASE/api/submit
 
-curl -sS -X POST BASE/api/submit -H "Content-Type: application/json" -d "{\"fase\":\"pre\",\"consent\":true,\"consent_version\":\"2026-10\",\"institucion\":\"Ejemplo\",\"carrera\":\"Ing\",\"semestre\":\"3\",\"edad\":\"18-20\",\"pss\":[0,1,2,3,4,0,1,2,3,4],\"web\":\"\"}"
+curl -sS -X POST BASE/api/submit -H "Content-Type: application/json" -d "{\"fase\":\"pre\",\"consent\":true,\"consent_version\":\"2026-10\",\"institucion\":\"ITTOL\",\"carrera\":\"Ingeniería en Sistemas Computacionales\",\"semestre\":\"3\",\"edad\":\"18-20\",\"pss\":[0,1,2,3,4,0,1,2,3,4],\"web\":\"\"}"
 
-curl -sS -X POST BASE/api/submit -H "Content-Type: application/json" -d "{\"fase\":\"pre\",\"consent\":true,\"consent_version\":\"2026-10\",\"institucion\":\"Bot\",\"carrera\":\"Ing\",\"semestre\":\"3\",\"edad\":\"18-20\",\"pss\":[0,1,2,3,4,0,1,2,3,4],\"web\":\"x\"}"
+curl -sS -X POST BASE/api/submit -H "Content-Type: application/json" -d "{\"fase\":\"pre\",\"consent\":true,\"consent_version\":\"2026-10\",\"institucion\":\"ITTOL\",\"carrera\":\"Ingeniería en Sistemas Computacionales\",\"semestre\":\"3\",\"edad\":\"18-20\",\"pss\":[0,1,2,3,4,0,1,2,3,4],\"web\":\"x\"}"
+
+curl -sS -X POST BASE/api/submit -H "Content-Type: application/json" -d "{\"fase\":\"pre\",\"consent\":true,\"consent_version\":\"2026-10\",\"institucion\":\"Otra escuela\",\"carrera\":\"Ingeniería Industrial\",\"semestre\":\"3\",\"edad\":\"18-20\",\"pss\":[0,1,2,3,4,0,1,2,3,4],\"web\":\"\"}"
 
 curl -sS -X POST BASE/api/submit -H "Content-Type: application/json" -d "{\"fase\":\"post\",\"code\":\"CODIGO\",\"pss\":[0,1,2,3,4,0,1,2,3,4],\"sus\":[1,2,3,4,5,1,2,3,4,5],\"satisfaccion\":4,\"nps\":9,\"util\":\"\",\"mejora\":\"\"}"
 

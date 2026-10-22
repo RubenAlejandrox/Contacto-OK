@@ -6,6 +6,19 @@ const CODE_RE = /^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{6}$/;
 const PSS_REVERSE = new Set([3, 4, 6, 7]);
 const CONSENT_VERSION = "2026-10";
 const FAIL_TEXT = "No pudimos conectar. Intenta de nuevo en unos minutos.";
+const INSTITUCIONES = ["ITTOL", "Otra"];
+const CARRERAS = [
+  "Ingeniería en Sistemas Computacionales",
+  "Ingeniería en Tecnologías de la Información y Comunicaciones",
+  "Ingeniería Mecatrónica",
+  "Ingeniería Electromecánica",
+  "Ingeniería Electrónica",
+  "Ingeniería Industrial",
+  "Ingeniería Química",
+  "Ingeniería en Gestión Empresarial",
+  "Ingeniería Logística",
+  "Otra",
+];
 
 const MSG = {
   FASE_PRE:
@@ -113,13 +126,43 @@ function requiredText(value, max) {
   return text;
 }
 
-async function insertRow(code, fase, payload) {
+function listasValidas(institucion, carrera) {
+  if (!INSTITUCIONES.includes(institucion) || !CARRERAS.includes(carrera)) return false;
+  if (institucion === "Otra" && carrera !== "Otra") return false;
+  return true;
+}
+
+async function insertPre(code, institucion, carrera, semestre, edad, pss, total) {
   const result = await db().query(
-    `INSERT INTO respuestas (code, fase, payload)
-     VALUES ($1, $2, $3::jsonb)
-     ON CONFLICT (code, fase) DO NOTHING
-     RETURNING id`,
-    [code, fase, JSON.stringify(payload)]
+    `WITH p AS (
+       INSERT INTO participantes (code, consent_version, institucion, carrera, semestre, edad)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       ON CONFLICT (code) DO NOTHING
+       RETURNING code
+     )
+     INSERT INTO pss (code, momento, respuestas, total)
+     SELECT code, 'pre', $7::smallint[], $8 FROM p
+     RETURNING code`,
+    [code, CONSENT_VERSION, institucion, carrera, semestre, edad, pss, total]
+  );
+  return rowsOf(result);
+}
+
+async function insertPost(code, pss, total, sus, score, satisfaccion, nps, util, mejora) {
+  const result = await db().query(
+    `WITH e AS (
+       INSERT INTO evaluacion_app (
+         code, sus_respuestas, sus_score, satisfaccion, nps, util, mejora
+       )
+       VALUES ($1, $2::smallint[], $3, $4, $5, $6, $7)
+       ON CONFLICT (code) DO NOTHING
+       RETURNING code
+     )
+     INSERT INTO pss (code, momento, respuestas, total)
+     SELECT code, 'post', $8::smallint[], $9 FROM e
+     ON CONFLICT (code, momento) DO NOTHING
+     RETURNING code`,
+    [code, sus, score, satisfaccion, nps, util, mejora, pss, total]
   );
   return rowsOf(result);
 }
@@ -148,25 +191,18 @@ async function handlePre(res, body) {
     !carrera ||
     !semestre ||
     !edad ||
+    !listasValidas(institucion, carrera) ||
     !isScale(body.pss, 10, 0, 4)
   ) {
     fail(res, 400, MSG.DATOS, "DATOS_INVALIDOS");
     return;
   }
 
-  const payload = {
-    consent_version: CONSENT_VERSION,
-    institucion,
-    carrera,
-    semestre,
-    edad,
-    pss: body.pss,
-    pss_total: pssTotal(body.pss),
-  };
+  const total = pssTotal(body.pss);
 
   for (let attempt = 0; attempt < 5; attempt += 1) {
     const code = makeCode();
-    const rows = await insertRow(code, "pre", payload);
+    const rows = await insertPre(code, institucion, carrera, semestre, edad, body.pss, total);
     if (rows.length > 0) {
       send(res, 200, { code });
       return;
@@ -208,14 +244,22 @@ async function handlePost(res, body) {
       `SELECT created_at,
               created_at + make_interval(days => $2::int) AS disponible_desde,
               now() >= created_at + make_interval(days => $2::int) AS listo
-       FROM respuestas
-       WHERE code = $1 AND fase = 'pre'`,
+       FROM participantes
+       WHERE code = $1`,
       [code, days]
     )
   );
 
   if (found.length === 0) {
     fail(res, 400, MSG.CODIGO, "CODIGO_NO_ENCONTRADO");
+    return;
+  }
+
+  const already = rowsOf(
+    await db().query(`SELECT code FROM evaluacion_app WHERE code = $1`, [code])
+  );
+  if (already.length > 0) {
+    fail(res, 409, MSG.YA, "YA_RESPONDIDO");
     return;
   }
 
@@ -229,18 +273,17 @@ async function handlePost(res, body) {
     return;
   }
 
-  const payload = {
-    pss: body.pss,
-    pss_total: pssTotal(body.pss),
-    sus: body.sus,
-    sus_score: susScore(body.sus),
-    satisfaccion: body.satisfaccion,
-    nps: body.nps,
+  const inserted = await insertPost(
+    code,
+    body.pss,
+    pssTotal(body.pss),
+    body.sus,
+    susScore(body.sus),
+    body.satisfaccion,
+    body.nps,
     util,
-    mejora,
-  };
-
-  const inserted = await insertRow(code, "post", payload);
+    mejora
+  );
   if (inserted.length === 0) {
     fail(res, 409, MSG.YA, "YA_RESPONDIDO");
     return;
