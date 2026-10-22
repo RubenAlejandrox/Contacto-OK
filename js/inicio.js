@@ -1,6 +1,6 @@
-import { withDev, isAndroid, show, mountCrisis, mountChrome, loadStatus } from "./comun.js";
+import { fechaLarga, withDev, isAndroid, show, mountCrisis, mountChrome, loadStatus } from "./comun.js";
 
-function applyPhase(fase) {
+function applyPhase(fase, postDesde) {
   const join = document.getElementById("join");
   const closedBox = document.getElementById("p1b");
   const goPost = document.getElementById("go-post");
@@ -13,6 +13,9 @@ function applyPhase(fase) {
   if (fase === "PRE") {
     goPost.hidden = true;
     postClosed.hidden = false;
+    if (postDesde) {
+      postClosed.textContent = `El cuestionario final se habilitará a partir del ${fechaLarga(postDesde)}.`;
+    }
   }
 }
 
@@ -49,7 +52,11 @@ async function boot() {
   }
 
   const fase = status.fase === "PRE" || status.fase === "POST" ? status.fase : "AMBAS";
-  applyPhase(fase);
+  if (status.post_desde) {
+    document.getElementById("pocos-minutos").textContent =
+      "Cerca de 8 minutos al inicio, 10 al final y uso libre de la app hasta el cuestionario final.";
+  }
+  applyPhase(fase, status.post_desde || null);
   show("p1");
 }
 

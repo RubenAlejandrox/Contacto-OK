@@ -9,8 +9,11 @@ Sitio estático y una función serverless para el registro y el cuestionario fin
 | `DATABASE_URL` | cadena de Neon | — |
 | `PILOTO_FASE` | `PRE`, `POST`, `AMBAS` | `AMBAS` |
 | `MIN_DIAS_POST` | entero ≥ 0 | `14` |
+| `POST_DESDE` | `AAAA-MM-DD` | sin fecha fija |
 
 Un valor inválido de `PILOTO_FASE` se trata como `AMBAS`. Un valor inválido de `MIN_DIAS_POST` se trata como `14`. En Preview conviene `MIN_DIAS_POST=0`.
+
+`POST_DESDE` es la fecha en que se abre el cuestionario final para todos, a las 00:00 hora de la Ciudad de México. Vacía o inválida no fija fecha. La ventana de cada participante es la más tardía entre esa fecha y `created_at` más `MIN_DIAS_POST` días. Cambiarla exige el mismo **Redeploy** que `PILOTO_FASE`.
 
 `BETA_URL` no es una variable de entorno: se define en `js/config.js` antes de abrir el piloto.
 
@@ -32,7 +35,7 @@ La vista exporta por institución sin la columna `code`. No incluir `code` en lo
 
 ## Probar la API
 
-Sustituir `BASE` por el origen local o de Preview. Hace falta `DATABASE_URL`. Con `MIN_DIAS_POST=14`, el cuestionario final inmediato responde `TODAVIA_NO`. Con `MIN_DIAS_POST=0`, responde `200`.
+Sustituir `BASE` por el origen local o de Preview. Hace falta `DATABASE_URL`. Con `MIN_DIAS_POST=14` y sin `POST_DESDE`, el cuestionario final inmediato responde `TODAVIA_NO`. Con `MIN_DIAS_POST=0` y sin fecha fija, responde `200`. Si `POST_DESDE` es posterior a hoy, también responde `TODAVIA_NO`.
 
 ```bash
 curl -sS BASE/api/submit

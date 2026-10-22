@@ -48,6 +48,23 @@ export function minDiasPost() {
   return n;
 }
 
+export function postDesde() {
+  const raw = process.env.POST_DESDE;
+  if (raw === undefined || raw.trim() === "") return null;
+  const value = raw.trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const date = new Date(`${value}T00:00:00-06:00`);
+  if (Number.isNaN(date.getTime())) return null;
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Mexico_City",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+  if (parts !== value) return null;
+  return date;
+}
+
 export function pssTotal(pss) {
   return pss.reduce((sum, value, index) => {
     return sum + (PSS_REVERSE.has(index) ? 4 - value : value);
@@ -239,14 +256,21 @@ async function handlePost(res, body) {
   }
 
   const days = minDiasPost();
+  const desde = postDesde();
   const found = rowsOf(
     await db().query(
       `SELECT created_at,
-              created_at + make_interval(days => $2::int) AS disponible_desde,
-              now() >= created_at + make_interval(days => $2::int) AS listo
+              GREATEST(
+                created_at + make_interval(days => $2::int),
+                $3::timestamptz
+              ) AS disponible_desde,
+              now() >= GREATEST(
+                created_at + make_interval(days => $2::int),
+                $3::timestamptz
+              ) AS listo
        FROM participantes
        WHERE code = $1`,
-      [code, days]
+      [code, days, desde ? desde.toISOString() : null]
     )
   );
 
@@ -299,6 +323,7 @@ export default async function handler(req, res) {
         fase: faseActual(),
         correo_habilitado: false,
         min_dias_post: minDiasPost(),
+        post_desde: postDesde()?.toISOString() ?? null,
       });
       return;
     }

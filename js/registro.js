@@ -1,5 +1,6 @@
 import { AVISO_APP_URL, BETA_URL, CARRERAS, CONSENT_VERSION, SITIO_URL } from "./config.js";
 import {
+  fechaLarga,
   PSS,
   addScale,
   bindCounter,
@@ -22,7 +23,7 @@ import {
   withDev,
 } from "./comun.js";
 
-const state = { minDias: 14 };
+const state = { minDias: 14, postDesde: null };
 let opener = null;
 
 function focusables(root) {
@@ -219,7 +220,13 @@ function presentCode(code) {
   document.getElementById("code-value").textContent = code;
   rememberCode(code);
   const days = document.getElementById("min-days");
-  if (state.minDias > 0) {
+  if (state.postDesde) {
+    const fecha = fechaLarga(state.postDesde);
+    document.getElementById("paso-uso").textContent = `Úsala hasta el ${fecha}.`;
+    document.getElementById("min-days-text").textContent =
+      `El cuestionario final se habilita a partir del ${fecha}.`;
+    days.hidden = false;
+  } else if (state.minDias > 0) {
     document.getElementById("min-days-n").textContent = `${state.minDias} días`;
     days.hidden = false;
   } else {
@@ -295,6 +302,20 @@ async function boot() {
   }
 
   state.minDias = Number.isInteger(status.min_dias_post) ? status.min_dias_post : 14;
+  state.postDesde = status.post_desde || null;
+  if (state.postDesde) {
+    const fecha = fechaLarga(state.postDesde);
+    const que = document.getElementById("que-haras");
+    que.replaceChildren();
+    const strong = document.createElement("strong");
+    strong.textContent = "Qué harás.";
+    que.append(
+      strong,
+      document.createTextNode(
+        ` Responderás un cuestionario inicial (unos 8 minutos), usarás la app y, a partir del ${fecha}, responderás un cuestionario final (unos 10 minutos).`
+      )
+    );
+  }
 
   if (!isAndroid()) {
     show("p2");

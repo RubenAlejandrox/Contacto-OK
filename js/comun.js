@@ -289,6 +289,16 @@ export function fechaMx(iso) {
   });
 }
 
+export function fechaLarga(iso) {
+  return new Date(iso).toLocaleDateString("es-MX", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "America/Mexico_City",
+  });
+}
+
 export function rememberCode(code) {
   try {
     localStorage.setItem(CODE_KEY, code);

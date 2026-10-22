@@ -1,4 +1,5 @@
 import {
+  fechaLarga,
   PSS,
   SUS,
   addChoices,
@@ -148,7 +149,10 @@ async function boot() {
 
   const fase = status.fase === "PRE" || status.fase === "POST" ? status.fase : "AMBAS";
   if (fase === "PRE") {
-    showClosed("El cuestionario final se habilitará al concluir las semanas de prueba.");
+    const aviso = status.post_desde
+      ? `El cuestionario final se habilitará a partir del ${fechaLarga(status.post_desde)}.`
+      : "El cuestionario final se habilitará al concluir las semanas de prueba.";
+    showClosed(aviso);
     return;
   }
 
