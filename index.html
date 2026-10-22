@@ -3,335 +3,380 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contacto OK</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
+    <title>Ayúdanos a probar OK?</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
-
-    <style>
-      :root {
-        color-scheme: only dark;
-        --bg-color: #002744;
-        --bg-accent-1: rgba(0, 180, 216, 0.55);
-        --bg-accent-2: rgba(29, 53, 87, 0.6);
-        --card-bg: rgba(255, 255, 255, 0.09);
-        --card-border: rgba(255, 255, 255, 0.16);
-        --text-color: #f2f7ff;
-        --muted-color: rgba(242, 247, 255, 0.72);
-        --accent-color: #00b4d8;
-        --shadow-color: rgba(0, 0, 0, 0.25);
-        --transition: 180ms ease;
-        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        min-height: 100svh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        padding: 40px 24px;
-        position: relative;
-        overflow-x: hidden;
-      }
-
-      body::before,
-      body::after {
-        content: "";
-        position: fixed;
-        width: 520px;
-        height: 520px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle at center,
-          var(--bg-accent-1),
-          transparent 65%
-        );
-        filter: blur(14px);
-        opacity: 0.55;
-        pointer-events: none;
-      }
-
-      body::before {
-        top: -220px;
-        right: -160px;
-      }
-
-      body::after {
-        bottom: -280px;
-        left: -180px;
-        background: radial-gradient(
-          circle at center,
-          rgba(0, 180, 216, 0.35),
-          transparent 70%
-        );
-      }
-
-      main {
-        width: min(420px, 100%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 28px;
-        text-align: center;
-        position: relative;
-        z-index: 1;
-      }
-
-      .brand-card {
-        width: 100%;
-        background: var(--card-bg);
-        border: 1px solid var(--card-border);
-        border-radius: 24px;
-        backdrop-filter: blur(12px);
-        padding: 32px 24px;
-        box-shadow: 0 18px 36px var(--shadow-color);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .brand-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          155deg,
-          rgba(255, 255, 255, 0.18) 0%,
-          rgba(255, 255, 255, 0) 45%
-        );
-        mix-blend-mode: screen;
-        pointer-events: none;
-      }
-
-      .brand-card img {
-        width: clamp(140px, 40vw, 180px);
-        height: auto;
-        filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.35));
-      }
-
-      .brand-card h1 {
-        font-size: clamp(1.4rem, 4vw, 1.75rem);
-        font-weight: 600;
-        letter-spacing: 0.02em;
-      }
-
-      .brand-card .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 7px 16px;
-        border-radius: 999px;
-        background: rgba(0, 180, 216, 0.16);
-        border: 1px solid rgba(0, 180, 216, 0.32);
-        color: var(--text-color);
-        font-size: 0.78rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-
-      .brand-card .badge i {
-        font-size: 0.9rem;
-      }
-
-      .brand-card p {
-        color: var(--muted-color);
-        font-size: clamp(0.95rem, 3.6vw, 1rem);
-        line-height: 1.45;
-        max-width: 32ch;
-      }
-
-      .cta-list {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .cta-list a {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        padding: 18px 20px;
-        border-radius: 18px;
-        border: 1px solid transparent;
-        background: rgba(255, 255, 255, 0.07);
-        color: var(--text-color);
-        text-decoration: none;
-        font-size: 1rem;
-        font-weight: 500;
-        transition: transform var(--transition), border-color var(--transition),
-          background var(--transition), box-shadow var(--transition);
-      }
-
-      .cta-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 52px;
-        height: 52px;
-        border-radius: 16px;
-        background: linear-gradient(
-          135deg,
-          rgba(0, 180, 216, 0.3),
-          rgba(0, 180, 216, 0.08)
-        );
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
-        flex-shrink: 0; /* evita que el marco se deforme */
-      }
-
-      .cta-icon i {
-        font-size: 1.28rem;
-      }
-
-      .cta-text {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-        text-align: left;
-      }
-
-      .cta-text .cta-title {
-        font-weight: 600;
-        font-size: 1.02rem;
-      }
-
-      .cta-text .cta-caption {
-        font-size: 0.84rem;
-        color: var(--muted-color);
-      }
-
-      .cta-arrow {
-        margin-left: auto;
-        color: rgba(242, 247, 255, 0.74);
-        font-size: 1.1rem;
-        transition: transform var(--transition), color var(--transition);
-      }
-
-      .cta-list a:hover,
-      .cta-list a:focus-visible {
-        transform: translateY(-2px);
-        border-color: rgba(255, 255, 255, 0.28);
-        background: rgba(0, 131, 164, 0.28);
-        box-shadow: 0 16px 32px rgba(0, 17, 31, 0.42);
-        outline: none;
-      }
-
-      .cta-list a:hover .cta-arrow,
-      .cta-list a:focus-visible .cta-arrow {
-        transform: translateX(4px);
-        color: var(--text-color);
-      }
-
-      footer {
-        color: rgba(242, 247, 255, 0.55);
-        font-size: 0.85rem;
-        letter-spacing: 0.02em;
-      }
-
-      @media (min-width: 540px) {
-        body {
-          padding: 64px 40px;
-        }
-
-        .brand-card {
-          padding: 40px 32px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <main>
-      <section class="brand-card">
-        <img src="assets/img/logo-OK.png" alt="Logo Contacto OK" />
-        <span class="badge">
-          <i class="fa-solid fa-sparkles" aria-hidden="true"></i>
-          Beta en evolución
-        </span>
-        <h1>Bienvenido visitante</h1>
+    <template id="crisis-tpl">
+      <aside class="crisis">
         <p>
-          Mantente al tanto de la evolución del proyecto. Accede a nuestra beta,
-          comparte tu opinión y acompáñanos en redes.
+          <i class="fa-solid fa-phone-volume" aria-hidden="true"></i>
+          <strong>¿Estás pasando por un momento difícil?</strong>
+          Si estás en crisis o piensas en hacerte daño, llama a la
+          <strong>Línea de la Vida: <a href="tel:8009112000">800 911 2000</a></strong>
+          (24 horas, gratuita). Este sitio y sus preguntas no sustituyen la
+          atención de un profesional.
         </p>
+      </aside>
+    </template>
+
+    <main class="wrap">
+      <section id="offline" class="screen">
+        <p class="hero-icon"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></p>
+        <h1>No pudimos conectar. Intenta de nuevo en unos minutos.</h1>
+        <div data-crisis></div>
       </section>
-      <nav class="cta-list" aria-label="Acciones principales">
-        <a
-          href="https://drive.google.com/drive/folders/1geKfQ9mDmkeul65B0I8M7hpbMksZhye_?usp=drive_link"
-          class="cta-item"
-        >
-          <span class="cta-icon" aria-hidden="true">
-            <i class="fa-brands fa-android"></i>
-          </span>
-          <span class="cta-text">
-            <span class="cta-title">Prueba la versión beta en Android</span>
-            <span class="cta-caption">Descarga la build más reciente</span>
-          </span>
-          <i
-            class="fa-solid fa-arrow-right-long cta-arrow"
-            aria-hidden="true"
-          ></i>
+
+      <section id="p1" class="screen">
+        <header class="brand">
+          <p class="logo">OK?</p>
+          <p class="tag">Juega con propósito</p>
+        </header>
+        <h1>Ayúdanos a probar OK?</h1>
+        <p class="lead">
+          OK? es una app para identificar y acompañar el estrés académico.
+          Participa en nuestro piloto y cuéntanos cómo te va.
+        </p>
+        <ul class="cards">
+          <li class="card">
+            <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
+            <strong>Dos cuestionarios</strong>
+            <p>Uno antes y otro después de usar la app.</p>
+          </li>
+          <li class="card">
+            <i class="fa-regular fa-clock" aria-hidden="true"></i>
+            <strong>Pocos minutos</strong>
+            <p>Cerca de 8 minutos al inicio, 10 al final y 2 a 4 semanas de uso libre.</p>
+          </li>
+          <li class="card">
+            <i class="fa-solid fa-user-secret" aria-hidden="true"></i>
+            <strong>Anónimo</strong>
+            <p>No pedimos tu nombre ni tu correo. Usamos un código aleatorio.</p>
+          </li>
+        </ul>
+        <div class="platform">
+          <i class="fa-brands fa-android" aria-hidden="true"></i>
+          <p>Por ahora el piloto está disponible solo para Android.</p>
+        </div>
+        <div class="stack">
+          <button id="join" class="btn btn-primary" type="button">
+            <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+            Quiero participar
+          </button>
+          <div id="p1b" class="callout" hidden>
+            <p>
+              <i class="fa-solid fa-lock" aria-hidden="true"></i>
+              El registro inicial ha concluido. Si ya participaste, ingresa tu código para el cuestionario final.
+            </p>
+          </div>
+          <p id="ig-note" class="note" hidden>Si algo no carga, abre este enlace en Chrome.</p>
+        </div>
+        <a id="go-post" class="linkish" href="/?fase=post">¿Ya terminaste el piloto? Responde el cuestionario final</a>
+        <p id="post-closed" class="disabled-link" hidden>El cuestionario final se habilitará al concluir las semanas de prueba.</p>
+        <p id="reject" class="note" hidden>
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          Sin tu consentimiento no podemos continuar. Gracias por tu interés.
+        </p>
+        <div data-crisis></div>
+        <footer class="foot">
+          <a href="aviso.html"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Aviso de privacidad</a>
+          <a href="mailto:okjuegaconproposito@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> okjuegaconproposito@gmail.com</a>
+          <a href="https://www.instagram.com/okjuega/"><i class="fa-brands fa-instagram" aria-hidden="true"></i> okjuega</a>
+          <span>© 2026 OKMental Technologies</span>
+        </footer>
+      </section>
+
+      <section id="p2" class="screen">
+        <p class="hero-icon"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i></p>
+        <h1>Por ahora el piloto es solo para Android</h1>
+        <p class="lead">
+          Abre esta página desde tu teléfono Android para participar. Si usas
+          otro dispositivo, escríbenos y te avisamos cuando haya una versión
+          para ti.
+        </p>
+        <a class="btn btn-primary" href="mailto:okjuegaconproposito@gmail.com">
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          Escribirnos
         </a>
-        <a href="https://www.instagram.com/okjuega/" class="cta-item">
-          <span class="cta-icon" aria-hidden="true">
-            <i class="fa-brands fa-instagram"></i>
-          </span>
-          <span class="cta-text">
-            <span class="cta-title">Síguenos en Instagram</span>
-            <span class="cta-caption"
-              >Mantente al contacto de historias, avances y lanzamientos</span
-            >
-          </span>
-          <i
-            class="fa-solid fa-arrow-right-long cta-arrow"
-            aria-hidden="true"
-          ></i>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p3" class="screen">
+        <h1>
+          <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
+          Cuéntanos un poco sobre ti
+        </h1>
+        <p class="step">Paso 1 de 2</p>
+        <div class="progress" aria-hidden="true"><span style="width: 50%"></span></div>
+        <form id="profile-form">
+          <div class="field">
+            <label for="institucion">Institución educativa</label>
+            <input id="institucion" name="institucion" type="text" maxlength="80" autocomplete="off" required />
+          </div>
+          <div class="field">
+            <label for="carrera">Carrera</label>
+            <input id="carrera" name="carrera" type="text" maxlength="80" autocomplete="off" required />
+          </div>
+          <div class="field">
+            <label for="semestre">Semestre actual</label>
+            <select id="semestre" name="semestre" required>
+              <option value=""></option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="edad">Rango de edad</label>
+            <select id="edad" name="edad" required>
+              <option value=""></option>
+              <option>18-20</option>
+              <option>21-23</option>
+              <option>24-26</option>
+              <option>27 o más</option>
+              <option>Prefiero no decirlo</option>
+            </select>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="web">web</label>
+            <input id="web" name="web" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <p class="note">
+            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+            No escribas tu nombre ni datos que te identifiquen.
+          </p>
+          <button id="to-pss" class="btn btn-primary" type="submit">Continuar</button>
+        </form>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p4" class="screen">
+        <h1>
+          <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+          Durante el último mes
+        </h1>
+        <p class="step">Paso 2 de 2</p>
+        <div class="progress" aria-hidden="true"><span style="width: 100%"></span></div>
+        <p>Las siguientes preguntas se refieren al último mes.</p>
+        <form id="pre-form">
+          <div id="pss-pre"></div>
+          <p id="pre-alert" class="alert" role="alert"></p>
+          <button id="pre-send" class="btn btn-primary" type="submit">
+            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true" hidden></i>
+            Enviar y obtener mi código
+          </button>
+        </form>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p5" class="screen">
+        <p class="hero-icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></p>
+        <h1>¡Listo, gracias!</h1>
+        <p>Este es tu código. Guárdalo: lo necesitarás para el cuestionario final.</p>
+        <p id="code-value" class="code"></p>
+        <div class="stack">
+          <button id="copy-code" class="btn btn-secondary" type="button" aria-live="polite">
+            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+            Copiar código
+          </button>
+          <button id="download-code" class="btn btn-secondary" type="button">
+            <i class="fa-solid fa-download" aria-hidden="true"></i>
+            Descargar código
+          </button>
+          <button id="share-code" class="btn btn-secondary" type="button" hidden>
+            <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+            Enviármelo
+          </button>
+        </div>
+        <div class="callout callout-orange">
+          <p>
+            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            Si pierdes este código, no podrás completar el cuestionario final, porque no guardamos tus datos personales. Toma una captura de pantalla.
+          </p>
+        </div>
+        <p class="note">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          También lo guardamos solo en este navegador para rellenarlo cuando regreses. Si cambias de navegador o borras sus datos, se perderá.
+        </p>
+        <h2 class="section-title">Siguientes pasos</h2>
+        <ol class="steps">
+          <li>Descarga e instala OK?</li>
+          <li>Úsala durante 2 a 4 semanas.</li>
+          <li>Regresa a piloto.okapp.mx/?fase=post y responde el cuestionario final con tu código.</li>
+        </ol>
+        <p id="min-days" class="note" hidden>
+          <i class="fa-regular fa-clock" aria-hidden="true"></i>
+          El cuestionario final se habilita a los <strong id="min-days-n"></strong> de tu registro.
+        </p>
+        <a id="beta-link" class="btn btn-primary" href="">
+          <i class="fa-brands fa-android" aria-hidden="true"></i>
+          Descargar OK? para Android
         </a>
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSewx40vQQWrZ-H5bkIsE5ytrAJmHRZC6lzcrlWHx6OiGoVmGA/viewform"
-          class="cta-item"
-        >
-          <span class="cta-icon" aria-hidden="true">
-            <i class="fa-regular fa-circle-question"></i>
-          </span>
-          <span class="cta-text">
-            <span class="cta-title">Haznos saber qué opinas del proyecto</span>
-            <span class="cta-caption"
-              >Tu retroalimentación guía nuestro desarrollo</span
-            >
-          </span>
-          <i
-            class="fa-solid fa-arrow-right-long cta-arrow"
-            aria-hidden="true"
-          ></i>
-        </a>
-      </nav>
-      <footer>
-        © <span id="year"></span> "OK?". Todos los derechos reservados.
-      </footer>
+        <div data-crisis></div>
+      </section>
+
+      <section id="post" class="screen">
+        <h1>
+          <i class="fa-solid fa-key" aria-hidden="true"></i>
+          Escribe tu código
+        </h1>
+        <form id="post-form">
+          <div class="field">
+            <label for="code-input">Escribe tu código</label>
+            <input id="code-input" name="code" type="text" maxlength="8" autocapitalize="characters" autocomplete="off" required />
+          </div>
+
+          <h2 class="section-title">
+            <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+            Durante el último mes
+          </h2>
+          <p>Las siguientes preguntas se refieren al último mes.</p>
+          <div id="pss-post"></div>
+
+          <h2 class="section-title">
+            <i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>
+            Usabilidad
+          </h2>
+          <p>1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo</p>
+          <div id="sus-post"></div>
+
+          <h2 id="sat-title" class="section-title">
+            <i class="fa-regular fa-face-smile" aria-hidden="true"></i>
+            ¿Qué tan satisfecho/a estás con OK?
+          </h2>
+          <div id="sat-post"></div>
+
+          <h2 id="nps-title" class="section-title">
+            <i class="fa-regular fa-comment-dots" aria-hidden="true"></i>
+            ¿Qué tan probable es que recomiendes OK? a un compañero?
+          </h2>
+          <div id="nps-post"></div>
+
+          <div class="field">
+            <label for="util">¿Qué fue lo más útil?</label>
+            <textarea id="util" name="util" maxlength="600"></textarea>
+          </div>
+          <div class="field">
+            <label for="mejora">¿Qué mejorarías?</label>
+            <textarea id="mejora" name="mejora" maxlength="600"></textarea>
+          </div>
+          <p class="note">
+            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+            No escribas datos que te identifiquen.
+          </p>
+          <p id="post-alert" class="alert" role="alert"></p>
+          <button id="post-send" class="btn btn-primary" type="submit">
+            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true" hidden></i>
+            Enviar
+          </button>
+        </form>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p10" class="screen">
+        <p class="hero-icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></p>
+        <h1>Gracias por participar. Tus respuestas nos ayudan a mejorar OK? para más estudiantes.</h1>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p11" class="screen">
+        <p class="hero-icon"><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i></p>
+        <h1>Aún estás en tu periodo de prueba</h1>
+        <p id="p11-text" class="lead"></p>
+        <a class="btn btn-secondary home-link" href="/">Volver al inicio</a>
+        <div data-crisis></div>
+      </section>
+
+      <section id="p12" class="screen">
+        <p class="hero-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></p>
+        <h1 id="p12-text"></h1>
+        <a class="btn btn-secondary home-link" href="/">Volver al inicio</a>
+        <div data-crisis></div>
+      </section>
     </main>
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
+
+    <dialog id="m1" aria-labelledby="m1-title">
+      <div class="modal-bar">
+        <h2 id="m1-title">
+          <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+          Tu privacidad
+        </h2>
+        <button class="icon-btn" type="button" data-close="m1" aria-label="Cerrar">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div id="m1-body" class="modal-body">
+        <ul class="bullets">
+          <li>
+            <i class="fa-solid fa-user-secret" aria-hidden="true"></i>
+            <span><strong>No pedimos tu nombre.</strong> Te identificamos con un código aleatorio.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>
+            <span><strong>Recabamos datos sensibles:</strong> tus respuestas sobre estrés y bienestar emocional.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-chart-column" aria-hidden="true"></i>
+            <span><strong>Los resultados se reportan solo de forma agregada y anónima</strong> a COMECyT y a las instituciones participantes.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-lock" aria-hidden="true"></i>
+            <span><strong>No vendemos ni transferimos tus datos.</strong></span>
+          </li>
+          <li>
+            <i class="fa-solid fa-user-pen" aria-hidden="true"></i>
+            <span><strong>Puedes ejercer tus derechos ARCO</strong> y retirar tu consentimiento cuando quieras.</span>
+          </li>
+        </ul>
+        <p><a href="aviso.html">Leer aviso de privacidad integral</a></p>
+      </div>
+      <div class="modal-actions">
+        <button id="read-notice" class="btn btn-primary" type="button" disabled>Leí el aviso</button>
+        <button id="cancel-notice" class="btn btn-secondary" type="button">Cancelar</button>
+      </div>
+    </dialog>
+
+    <dialog id="m2" aria-labelledby="m2-title">
+      <div class="modal-bar">
+        <h2 id="m2-title">
+          <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+          Consentimiento para participar
+        </h2>
+        <button class="icon-btn" type="button" data-close="m2" aria-label="Cerrar">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Propósito.</strong> Evaluar si OK?, una app de apoyo al estrés académico, es útil y fácil de usar, y observar cómo cambia el estrés percibido entre antes y después de usarla.</p>
+        <p><strong>Qué harás.</strong> Responderás un cuestionario inicial (unos 8 minutos), usarás la app durante 2 a 4 semanas y responderás un cuestionario final (unos 10 minutos).</p>
+        <p><strong>Posibles molestias.</strong> Algunas preguntas tratan sobre cómo te has sentido y pueden resultar incómodas. Puedes dejar de responder en cualquier momento cerrando la página. Estas preguntas no son un diagnóstico. Si necesitas apoyo, llama a la Línea de la Vida al 800 911 2000.</p>
+        <p><strong>Beneficios.</strong> No hay pago ni compensación. Tu participación ayuda a mejorar una herramienta para estudiantes.</p>
+        <p><strong>Confidencialidad.</strong> No te pedimos nombre. Tus respuestas se guardan con un código aleatorio y se reportan solo de forma agregada y anónima.</p>
+        <p><strong>Voluntariedad.</strong> Participar es voluntario. Puedes retirarte y solicitar la cancelación de tus datos escribiendo a okjuegaconproposito@gmail.com con tu código.</p>
+        <label class="check"><input id="c-age" type="checkbox" /> Tengo 18 años o más.</label>
+        <label class="check"><input id="c-notice" type="checkbox" /> Leí el aviso de privacidad y lo entiendo.</label>
+        <label class="check"><input id="c-join" type="checkbox" /> Acepto participar de forma voluntaria y que se traten mis datos, incluidos datos sensibles sobre mi bienestar emocional, para los fines del piloto.</label>
+      </div>
+      <div class="modal-actions">
+        <button id="accept" class="btn btn-primary" type="button" disabled>Acepto y continuar</button>
+        <button id="decline" class="btn btn-secondary" type="button">No acepto</button>
+      </div>
+    </dialog>
+
+    <script src="js/app.js"></script>
   </body>
 </html>
